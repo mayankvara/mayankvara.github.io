@@ -1,1635 +1,841 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Counter OS | Unite Business Laundry Ecosystem</title>
+  <meta name="description" content="Turn everyday WhatsApp & Telegram into your 24/7 digital counter, auto ledger, and doorstep pickup dispatcher.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Meta -->
+  <style>
+    :root {
+      --bg-dark: #070B14;
+      --card-bg: #0F172A;
+      --card-border: rgba(56, 189, 248, 0.15);
+      --primary: #38BDF8;
+      --primary-glow: rgba(56, 189, 248, 0.35);
+      --teal: #0D9488;
+      --gold: #F59E0B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-    <!-- Title -->
-    <title>Mayank Vara - Personal Portfolio</title>
+    .glow-orb {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-    <!-- CSS Plugins -->
-    <link rel="stylesheet" href="./assets/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/fontawesome/css/all.css">
-    <link rel="stylesheet" href="./assets/magnific-popup.css">
-    <link rel="stylesheet" href="./assets/simplebar.css">
-    <link rel="stylesheet" href="./assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="./assets/owl.theme.default.min.css">
-    <link rel="stylesheet" href="./assets/jquery.animatedheadline.css">
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 11, 20, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 7%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+    .logo-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284C7, #0D9488);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--primary); }
+    .btn-cta-nav {
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
+      color: #04101E;
+      padding: 0.6rem 1.4rem;
+      border-radius: 99px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      transition: transform 0.2s;
+    }
+    .btn-cta-nav:hover { transform: translateY(-2px); }
 
-    <!-- CSS Base -->
-    <link rel="stylesheet" class="back-color" href="./assets/style-dark.css">
-    <link rel="stylesheet" href="./assets/style-demo.css">
+    .hero {
+      position: relative;
+      padding: 6rem 7% 4rem;
+      text-align: center;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 99px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.4rem;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #38BDF8, #818CF8, #FDE047);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 740px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #38BDF8, #0D9488);
+      color: #06111C;
+      padding: 0.9rem 2.2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.35);
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.5); }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-    <!-- Settings Style -->
-    <link rel="stylesheet" class="posit-nav" href="./assets/left-nav.css">
-    <link rel="stylesheet" class="theme-color" href="./assets/red-color.css">
-	<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/65eee0ad9131ed19d977c95f/1homjflgo';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+    .stats-ribbon {
+      margin: 3.5rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .stat-item h3 {
+      font-size: 2.2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .section-wrap { padding: 5rem 7%; max-width: 1250px; margin: auto; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-title span {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .section-title h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* Interactive Garment Drawing Studio */
+    .studio-container {
+      background: #0B1222;
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+      align-items: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    @media(max-width: 900px) {
+      .studio-container { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; }
+    }
+    .btn-item-tray {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+    }
+    .btn-item {
+      background: #151F32;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.9rem 0.5rem;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-item:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .btn-item.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(13, 148, 136, 0.25));
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+    .canvas-display-box {
+      background: #070B14;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2rem;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .canvas-meta {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* SVG Stroke Animation Keyframes */
+    .draw-path {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawStroke 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    .draw-circle {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawStroke 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes drawStroke {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      transition: transform 0.25s, border-color 0.25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: rgba(56, 189, 248, 0.1);
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    .feature-card h3 { font-size: 1.35rem; margin-bottom: 0.75rem; }
+    .feature-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .btn-modal-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--primary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .btn-modal-trigger:hover { text-decoration: underline; }
+
+    /* Inquiry Section */
+    .lead-section {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(7, 11, 20, 1) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 4rem 3rem;
+      margin: 4rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media(max-width: 900px) {
+      .lead-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 1.5rem; }
+    }
+    .lead-copy h3 { font-size: 2.2rem; margin-bottom: 1rem; }
+    .lead-copy p { color: var(--text-muted); margin-bottom: 1.5rem; }
+    .lead-badges { display: flex; flex-direction: column; gap: 0.8rem; }
+    .lead-badge { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: #E2E8F0; }
+
+    .inquiry-form {
+      background: #0B1120;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #CBD5E1; }
+    .form-control {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: #151F32;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--primary); }
+
+    /* Modal Component */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.active { display: grid; opacity: 1; }
+    .modal-card {
+      background: #0F172A;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      width: 90%;
+      max-width: 580px;
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .modal-backdrop.active .modal-card { transform: scale(1); }
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: grid;
+      place-items: center;
+    }
+    .modal-art-box {
+      width: 100%;
+      height: 200px;
+      margin: 1.5rem 0;
+      display: grid;
+      place-items: center;
+      background: #070B14;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3rem 7%;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Preloader -->
-<div id="preloader" class="loaded">
-    <div class="loading-area">
-        <div class="circle"></div>
+  <div class="glow-orb"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-badge">🧺</div>
+      <span>Smart Counter OS</span>
     </div>
-    <div class="left-side"></div>
-    <div class="right-side"></div>
-</div>
-
-<!-- Main Site -->
-<div id="home">
-    <div id="about">
-        <div id="resume">
-            <div id="portfolio">
-                <div id="blog">
-                    <div id="contact">
-
-                        <div class="header-mobile">
-                            <a class="header-toggle"><i class="fas fa-bars"></i></a>
-                            <h2>Mayank Vara</h2>
-                        </div>
-
-                        <!-- Left Block -->
-                        <nav class="header-main" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0px;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0px; height: 100%; overflow: hidden scroll;">
-
-                                            <!-- Logo -->
-                                            <div class="logo">
-                                                <img src="./assets/logo.png" alt="">
-                                            </div>
-
-                                            <ul>
-                                                <li data-tooltip="home" data-position="top">
-                                                    <a href="#home"
-                                                       class="icon-h fas fa-house-damage"></a>
-                                                </li>
-                                                <li data-tooltip="about" data-position="top">
-                                                    <a href="#about"
-                                                       class="icon-a fas fa-user-tie"></a>
-                                                </li>
-                                                <li data-tooltip="resume" data-position="top">
-                                                    <a href="#resume"
-                                                       class="icon-r fas fa-address-book"></a>
-                                                </li>
-                                                <li data-tooltip="portfolio" data-position="top">
-                                                    <a href="#portfolio"
-                                                       class="icon-p fas fa-briefcase"></a>
-                                                </li>
-                                                <li data-tooltip="blog" data-position="top">
-                                                    <a href="#blog"
-                                                       class="icon-b fas fa-receipt"></a>
-                                                </li>
-                                                <li data-tooltip="contact" data-position="bottom">
-                                                    <a href="#contact"
-                                                       class="icon-c fas fa-envelope"></a>
-                                                </li>
-                                            </ul>
-
-                                            <!-- Sound wave -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 130px; height: 654px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0, 0, 0); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 191px; transform: translate3d(0px, 0px, 0px); visibility: visible;"></div>
-                            </div>
-                        </nav>
-
-                        <!-- Home Section -->
-                        <div class="pt-home" style="background-image: url('./assets/home-bg.jpg')">
-                            <section>
-
-                                <!-- Banner -->
-                                <div class="banner">
-                                    <h1>Mayank Vara</h1>
-                                    <p class="cd-headline rotate-1">
-                                        <span>I am </span>
-                                        <span class="cd-words-wrapper" style="width:217px;">
-								<b class="is-visible">Odoo Developer</b>
-								<b class="is-hidden">Odoo Web Designer</b>
-							</span>
-                                    </p>
-                                </div>
-
-                                <!-- Social -->
-                                <div class="social">
-                                    <ul>
-                                        <li><a href="https://www.facebook.com/mayank.vara" target="_blank"><i
-                                                class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="https://twitter.com/mayank_vara" target="_blank"><i
-                                                class="fab fa-twitter"></i></a></li>
-                                        <li><a href="https://www.instagram.com/mayankvara" target="_blank"><i
-                                                class="fab fa-instagram"></i></a></li>
-                                        <li><a href="#"><i
-                                                class="fab fa-youtube"></i></a></li>
-                                    </ul>
-                                </div>
-                            </section>
-                        </div>
-
-                        <!-- About Section -->
-                        <div class="page pt-about" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0; height: 100%; overflow: hidden scroll;">
-                                            <section class="container">
-
-                                                <!-- Section Title -->
-                                                <div class="header-page mt-70 mob-mt">
-                                                    <h2>About Me</h2>
-                                                    <span></span>
-                                                </div>
-
-                                                <!-- Personal Info Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Information Block -->
-                                                    <div class="col-lg-12 col-sm-12">
-                                                        <div class="info box">
-                                                            <div class="row">
-                                                                <div class="col-lg-3 col-sm-4">
-                                                                    <div class="photo">
-                                                                        <img alt=""
-                                                                             src="./assets/user-photo.jpg">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-9 col-sm-8">
-                                                                    <h4>Mayank Vara</h4>
-                                                                    <div class="loc">
-                                                                        <i class="fas fa-map-marked-alt"></i> Ahmedabad,
-                                                                        India
-                                                                    </div>
-                                                                    <p>Hello! I’m Mayank Vara a self-taught &amp; award
-                                                                        winning Digital Designer &amp; Developer with
-                                                                        over five years work experience. I started in my
-                                                                        children’s room, got pro at renowned digital
-                                                                        agencies akij co and nork blue lebel. Now I’m
-                                                                        based in Ahmedabad, India, working for Apple
-                                                                        fredmansky and enjoying the life in the
-                                                                        countryside.
-                                                                    </p>
-                                                                    <p>I have couple of hobbies but I like to travel. I
-                                                                        have already travelled almost all the districts
-                                                                        of our country with my father. I am fond of
-                                                                        fruit.
-                                                                    </p>
-                                                                </div>
-
-                                                                <!-- Icon Info -->
-                                                                <div class="col-lg-3 col-sm-4">
-                                                                    <div class="info-icon">
-                                                                        <i class="fas fa-award"></i>
-                                                                        <div class="desc-icon">
-                                                                            <h6>8 Years Job</h6>
-                                                                            <p>Experience</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Icon Info -->
-                                                                <div class="col-lg-3 col-sm-4">
-                                                                    <div class="info-icon">
-                                                                        <i class="fas fa-certificate"></i>
-                                                                        <div class="desc-icon">
-                                                                            <h6>500+ Projects</h6>
-                                                                            <p>Completed</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Icon Info -->
-                                                                <div class="col-lg-3 col-sm-4">
-                                                                    <div class="info-icon">
-                                                                        <i class="fas fa-user-astronaut"></i>
-                                                                        <div class="desc-icon">
-                                                                            <h6>Freelance</h6>
-                                                                            <p>Not Available</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-3 col-sm-12 pt-50">
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#"
-                                                                       class="btn-st">Download CV</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Interests Row Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-50">
-                                                            <h3>My Interests</h3>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-12 col-sm-12">
-                                                        <div class="box">
-                                                            <div class="row">
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-music"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Music</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-route"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Travelling</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="far fa-image"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Photos</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-film"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Movies</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-space-shuttle"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Space</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-book"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Books</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-gamepad"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Video games</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Interests Item -->
-                                                                <div class="col-lg-3 col-sm-6">
-                                                                    <div class="inter-icon">
-                                                                        <i class="fas fa-tree"></i>
-                                                                        <div class="desc-inter">
-                                                                            <h6>Forest</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Service Row Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-50">
-                                                            <h3>Services</h3>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Service Item -->
-                                                    <div class="col-lg-6 col-sm-6">
-                                                        <div class="service box mb-40">
-                                                            <i class="fas fa-desktop"></i>
-                                                            <h4>Web Design</h4>
-                                                            <p>Lorem Ipsum is simply dummy text of the Lorem has been
-                                                                the industry's standard dummy text ever.</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Service Item -->
-                                                    <div class="col-lg-6 col-sm-6">
-                                                        <div class="service box mb-40">
-                                                            <i class="fas fa-cogs"></i>
-                                                            <h4>Web Development</h4>
-                                                            <p>Lorem Ipsum is simply dummy text of the Lorem has been
-                                                                the industry's standard dummy text ever.</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Service Item -->
-                                                    <div class="col-lg-6 col-sm-6">
-                                                        <div class="service box mb-40">
-                                                            <i class="fas fa-mobile-alt"></i>
-                                                            <h4>Responsive Design</h4>
-                                                            <p>Lorem Ipsum is simply dummy text of the Lorem has been
-                                                                the industry's standard dummy text ever.</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Service Item -->
-                                                    <div class="col-lg-6 col-sm-6">
-                                                        <div class="service box mb-40">
-                                                            <i class="fas fa-medkit"></i>
-                                                            <h4>quick Support</h4>
-                                                            <p>Lorem Ipsum is simply dummy text of the Lorem has been
-                                                                the industry's standard dummy text ever.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Testimonial Row Start -->
-                                                <div class="row testimonial mt-60">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-50">
-                                                            <h3>Testimonials</h3>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="owl-carousel owl-theme owl-loaded owl-drag">
-
-                                                        <!-- Testimonail Item -->
-
-                                                        <div class="owl-stage-outer">
-                                                            <div class="owl-stage"
-                                                                 style="transform: translate3d(-2340px, 0px, 0px); transition: all 0.5s ease 0s; width: 4095px;">
-                                                                <div class="owl-item cloned"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-2.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>Alex Doe</h4>
-                                                                                <p>UI/UX Designer</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star-half"></i>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item cloned"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-3.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>David Doe</h4>
-                                                                                <p>UI/UX Designer</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-1.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>John Doe</h4>
-                                                                                <p>Web Development</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-2.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>Alex Doe</h4>
-                                                                                <p>UI/UX Designer</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star-half"></i>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item active"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-3.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>David Doe</h4>
-                                                                                <p>UI/UX Designer</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item cloned active"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-1.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>John Doe</h4>
-                                                                                <p>Web Development</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="owl-item cloned"
-                                                                     style="width: 555px; margin-right: 30px;">
-                                                                    <div class="testimonial-item">
-                                                                        <div class="media">
-                                                                            <img src="./assets/testimonial-2.jpg"
-                                                                                 alt="">
-                                                                            <div class="content">
-                                                                                <h4>Alex Doe</h4>
-                                                                                <p>UI/UX Designer</p>
-                                                                            </div>
-                                                                            <ul class="rating">
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star"></i></li>
-                                                                                <li><i class="far fa-star-half"></i>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="comment pt-30">
-                                                                            <p>
-                                                                                Curabitur eleifend tempor gnceleris eget
-                                                                                placeratvel phasellus eget
-                                                                                sem just metup consequat gestas
-                                                                                facilisis eleifend posure tempor
-                                                                                metus sem just metup consequat gestas
-                                                                                facilisis eleifend posures
-                                                                                temporureture.
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="owl-nav disabled">
-                                                            <button type="button" role="presentation" class="owl-prev">
-                                                                <span aria-label="Previous">‹</span></button>
-                                                            <button type="button" role="presentation" class="owl-next">
-                                                                <span aria-label="Next">›</span></button>
-                                                        </div>
-                                                        <div class="owl-dots disabled"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Price Row Start -->
-                                                <div class="row mt-100 mb-60">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-90">
-                                                            <h3>Price</h3>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Price Item -->
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <div class="price box">
-                                                            <div class="head-price">
-                                                                <i class="fa fa-user"></i>
-                                                                <h4>Basic</h4>
-                                                            </div>
-                                                            <div class="body-price">
-                                                                <div class="price-plan">
-                                                                    <span class="currency">$</span>
-                                                                    <span class="number">125</span>
-                                                                    <span class="period">month</span>
-                                                                </div>
-                                                                <div class="list-price">
-                                                                    <ul>
-                                                                        <li>Web Design</li>
-                                                                        <li>Web Development</li>
-                                                                        <li class="disable">Responsive Design</li>
-                                                                        <li class="disable">Game Development</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="footer-price">
-                                                                <a href="http://baha.malyarchuk.space/index-image.html#"
-                                                                   class="btn-st">Buy Now</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Price Item -->
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <div class="price box">
-                                                            <div class="head-price">
-                                                                <i class="fa fa-briefcase"></i>
-                                                                <h4>Standard</h4>
-                                                            </div>
-                                                            <div class="body-price">
-                                                                <div class="price-plan">
-                                                                    <span class="currency">$</span>
-                                                                    <span class="number">140</span>
-                                                                    <span class="period">month</span>
-                                                                </div>
-                                                                <div class="list-price">
-                                                                    <ul>
-                                                                        <li>Web Design</li>
-                                                                        <li>Web Development</li>
-                                                                        <li>Responsive Design</li>
-                                                                        <li class="disable">Game Development</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="footer-price">
-                                                                <a href="http://baha.malyarchuk.space/index-image.html#"
-                                                                   class="btn-st">Buy Now</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Price Item -->
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <div class="price box">
-                                                            <div class="head-price">
-                                                                <i class="fa fa-globe"></i>
-                                                                <h4>Premium</h4>
-                                                            </div>
-                                                            <div class="body-price">
-                                                                <div class="price-plan">
-                                                                    <span class="currency">$</span>
-                                                                    <span class="number">155</span>
-                                                                    <span class="period">month</span>
-                                                                </div>
-                                                                <div class="list-price">
-                                                                    <ul>
-                                                                        <li>Web Design</li>
-                                                                        <li>Web Development</li>
-                                                                        <li>Responsive Design</li>
-                                                                        <li>Game Development</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="footer-price">
-                                                                <a href="http://baha.malyarchuk.space/index-image.html#"
-                                                                   class="btn-st">Buy Now</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 1171px; height: 2964px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0px, 0px, 0px); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 42px; transform: translate3d(0px, 0px, 0px); visibility: visible;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Resume Section -->
-                        <div class="page pt-resume" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0px;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0px; height: 100%; overflow: hidden scroll;">
-                                            <section class="container">
-
-                                                <!-- Section Title -->
-                                                <div class="header-page mt-70 mob-mt">
-                                                    <h2>Resume</h2>
-                                                    <span></span>
-                                                </div>
-
-                                                <!-- Experience & Education Row Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Experience Column Start -->
-                                                    <div class="col-lg-6 col-sm-12">
-
-                                                        <!-- Header Block -->
-                                                        <div class="header-box mb-50">
-                                                            <h3>Experience</h3>
-                                                        </div>
-
-                                                        <div class="experience box">
-
-                                                            <!-- Experience Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Web Design</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2012 - 2014 |
-                                                                        Сompany Inc</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-
-                                                            <!-- Experience Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Fornt-End Developer</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2014 - 2015 |
-                                                                        Сompany Inc</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-
-                                                            <!-- Experience Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Web Development</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2015 - 2019 |
-                                                                        Сompany Inc</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Education Column Start -->
-                                                    <div class="col-lg-6 col-sm-12">
-
-                                                        <!-- Header Block -->
-                                                        <div class="header-box mb-50 mob-box-mt">
-                                                            <h3>Education</h3>
-                                                        </div>
-
-                                                        <div class="experience box">
-
-                                                            <!-- Education Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Phd</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2011 - 2013 |
-                                                                        Computer Science</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-
-                                                            <!-- Education Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Post Graduation</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2013 - 2016 |
-                                                                        Computer Science</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-
-                                                            <!-- Education Item -->
-                                                            <div class="item">
-                                                                <div class="main">
-                                                                    <h4>Gradution</h4>
-                                                                    <p><i class="far fa-calendar-alt"></i>2016 - 2018 |
-                                                                        Computer Science</p>
-                                                                </div>
-                                                                <p>Work experience is essential for getting a job.
-                                                                    Whether it's a short work placement or a longer
-                                                                    internship, work experience is always viewed
-                                                                    favourably by employers and can help you decide your
-                                                                    future career.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Skills Row Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-50">
-                                                            <h3>Skills</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="box skills">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-sm-6">
-
-                                                            <!-- Skill Item -->
-                                                            <div class="skill-item">
-                                                                <h4 class="progress-title">HTML5</h4>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar" style="width:98%">
-                                                                        <div class="progress-value">98%</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Skill Item -->
-                                                            <div class="skill-item">
-                                                                <h4 class="progress-title">CSS3</h4>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar" style="width:85%">
-                                                                        <div class="progress-value">85%</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Skill Item -->
-                                                            <div class="skill-item">
-                                                                <h4 class="progress-title">JavaScript</h4>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar" style="width:90%">
-                                                                        <div class="progress-value">90%</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Skill Item -->
-                                                            <div class="skill-item">
-                                                                <h4 class="progress-title">UI/UX designer</h4>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar" style="width:77%">
-                                                                        <div class="progress-value">77%</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-6 col-sm-6">
-                                                            <div class="row">
-
-                                                                <!-- Skill Item -->
-                                                                <div class="col-lg-6 col-sm-6">
-                                                                    <div class="chart" data-percent="80"
-                                                                         data-bar-color="#fff"> 80% <p>PHP</p>
-                                                                        <canvas height="130" width="130"></canvas>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Skill Item -->
-                                                                <div class="col-lg-6 col-sm-6">
-                                                                    <div class="chart" data-percent="70"
-                                                                         data-bar-color="#fff"> 70% <p>Illustrator</p>
-                                                                        <canvas height="130" width="130"></canvas>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Skill Item -->
-                                                                <div class="col-lg-6 col-sm-6">
-                                                                    <div class="chart" data-percent="60"
-                                                                         data-bar-color="#fff"> 60% <p>Photoshop</p>
-                                                                        <canvas height="130" width="130"></canvas>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- Skill Item -->
-                                                                <div class="col-lg-6 col-sm-6">
-                                                                    <div class="chart" data-percent="90"
-                                                                         data-bar-color="#fff"> 90% <p>AngularJS</p>
-                                                                        <canvas height="130" width="130"></canvas>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Work Process Row Start -->
-                                                <div class="row mt-100">
-
-                                                    <!-- Header Block -->
-                                                    <div class="col-md-12">
-                                                        <div class="header-box mb-50">
-                                                            <h3>My Working Process</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="box work-process mb-100">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-sm-12 ltr">
-
-                                                            <!-- Working Process Item-->
-                                                            <div class="single-wp width-sm process-1">
-                                                                <p class="wp-step">01</p>
-                                                                <h4 class="wp-title">Discuss idea</h4>
-                                                                <p>I could describe these conceptions, also impress upon
-                                                                    paper all that is living.</p>
-                                                            </div>
-
-                                                            <!-- Working Process Item-->
-                                                            <div class="single-wp width-sm process-2">
-                                                                <p class="wp-step">02</p>
-                                                                <h4 class="wp-title">Creative concept</h4>
-                                                                <p>I could describe these conceptions, also impress upon
-                                                                    paper all that is living.</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-4 hidden-sm">
-
-                                                            <!-- Working Process Circle-->
-                                                            <div class="wp-circle">
-                                                                <h4>Working Process</h4>
-                                                                <span class="dots top-l"></span>
-                                                                <span class="dots bottom-l"></span>
-                                                                <span class="dots top-r"></span>
-                                                                <span class="dots bottom-r"></span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-4 col-sm-12 rtl">
-
-                                                            <!-- Working Process Item-->
-                                                            <div class="single-wp width-sm process-3">
-                                                                <p class="wp-step">03</p>
-                                                                <h4 class="wp-title">Web concept</h4>
-                                                                <p>I could describe these conceptions, also impress upon
-                                                                    paper all that is living.</p>
-                                                            </div>
-
-                                                            <!-- Working Process Item-->
-                                                            <div class="single-wp width-sm process-4">
-                                                                <p class="wp-step">04</p>
-                                                                <h4 class="wp-title">Final concept</h4>
-                                                                <p>I could describe these conceptions, also impress upon
-                                                                    paper all that is living.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 1171px; height: 2179px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0px, 0px, 0px); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 57px; transform: translate3d(0px, 146px, 0px); visibility: visible;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Portfolio Section -->
-                        <div class="page pt-portfolio" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0px;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0px; height: 100%; overflow: hidden scroll;">
-                                            <section class="container">
-
-                                                <!-- Section Title -->
-                                                <div class="header-page mt-70 mob-mt">
-                                                    <h2>Portfolio</h2>
-                                                    <span></span>
-                                                </div>
-
-                                                <!-- Portfolio Filter Row Start -->
-                                                <div class="row mt-100">
-                                                    <div class="col-lg-12 col-sm-12 portfolio-filter">
-                                                        <ul>
-                                                            <li class="active" data-filter="*">All</li>
-                                                            <li data-filter=".brand" class="">Brand</li>
-                                                            <li data-filter=".design" class="">Design</li>
-                                                            <li data-filter=".graphic" class="">Graphic</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Portfolio Item Row Start -->
-                                                <div class="row portfolio-items mt-100 mb-100"
-                                                     style="position: relative; height: 1054.22px;">
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 graphic"
-                                                         style="position: absolute; left: 0px; top: 0px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-1.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Graphic</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-1.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 design"
-                                                         style="position: absolute; left: 380px; top: 0px;">
-                                                        <figure>
-                                                            <img alt=""
-                                                                 src="./assets/img-2.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Design</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-2.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 brand"
-                                                         style="position: absolute; left: 760px; top: 0px;">
-                                                        <figure>
-                                                            <img alt=""
-                                                                 src="./assets/img-3.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Graphic</p><i class="fas fa-video"></i>
-                                                                <a class="video-link"
-                                                                   href="https://www.youtube.com/watch?v=k_okcNVZqqI"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 graphic"
-                                                         style="position: absolute; left: 380px; top: 249px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-4.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Design</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-4.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 design"
-                                                         style="position: absolute; left: 760px; top: 249px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-5.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Design</p><i class="fas fa-video"></i>
-                                                                <a class="video-link"
-                                                                   href="https://www.youtube.com/watch?v=k_okcNVZqqI"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 brand"
-                                                         style="position: absolute; left: 0px; top: 307px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-6.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Brand</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-6.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 graphic"
-                                                         style="position: absolute; left: 0px; top: 595px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-7.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Brand</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-7.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 design"
-                                                         style="position: absolute; left: 380px; top: 673px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-8.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Brand</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-8.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-
-                                                    <!-- Portfolio Item -->
-                                                    <div class="item col-lg-4 col-sm-6 brand"
-                                                         style="position: absolute; left: 760px; top: 673px;">
-                                                        <figure style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg);">
-                                                            <img alt=""
-                                                                 src="./assets/img-9.jpg">
-                                                            <figcaption>
-                                                                <h3>Project Name</h3>
-                                                                <p>Graphic</p><i class="fas fa-image"></i>
-                                                                <a class="image-link"
-                                                                   href="./assets/img-9.jpg"></a>
-                                                            </figcaption>
-                                                            <div class="js-tilt-glare"
-                                                                 style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
-                                                                <div class="js-tilt-glare-inner"
-                                                                     style="position: absolute; top: 50%; left: 50%; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); width: 700px; height: 700px; transform: rotate(180deg) translate(-50%, -50%); transform-origin: 0% 0%; opacity: 0;"></div>
-                                                            </div>
-                                                        </figure>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 1171px; height: 1507px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0px, 0px, 0px); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 83px; transform: translate3d(0px, 186px, 0px); visibility: visible;"></div>
-                            </div>
-                        </div>
-                        <!-- Blog Section -->
-                        <div class="page pt-blog" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0px;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0px; height: 100%; overflow: hidden scroll;">
-                                            <section class="container">
-
-                                                <!-- Section Title -->
-                                                <div class="header-page mt-70 mob-mt">
-                                                    <h2>Blog</h2>
-                                                    <span></span>
-                                                </div>
-
-                                                <!-- Blog Row Start -->
-                                                <div class="row blog-masonry mt-100 mb-50"
-                                                     style="position: relative; height: 1156px;">
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 0px; top: 0px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-1(1).jpg"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">15
-                                                                        April 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Lifestyle</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 380px; top: 0px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-2(1).jpg"></a>
-                                                                <a href="https://www.youtube.com/watch?v=k_okcNVZqqI"
-                                                                   class="btn-play"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">10
-                                                                        March 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Lifestyle</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 760px; top: 0px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-3(1).jpg"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">02
-                                                                        March 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Work</a>
-                                                                </li>
-                                                            </ul>
-                                                            <p>Tower Hamlets or mass or members of propaganda bananas
-                                                                real estate. However, a large and a mourning, vel
-                                                                euismod.</p>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 0px; top: 596px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-4(1).jpg"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">29
-                                                                        March 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Career</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 380px; top: 526px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-5(1).jpg"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">14
-                                                                        April 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Lifestyle</a>
-                                                                </li>
-                                                            </ul>
-                                                            <p>Tower Hamlets or mass or members of propaganda bananas
-                                                                real estate. However, a large and a mourning, vel
-                                                                euismod.</p>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Blog Item -->
-                                                    <div class="col-lg-4 col-sm-6"
-                                                         style="position: absolute; left: 760px; top: 556px;">
-                                                        <div class="blog-item">
-                                                            <div class="thumbnail">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"><img
-                                                                        alt=""
-                                                                        src="./assets/img-6(1).jpg"></a>
-                                                                <a href="https://www.youtube.com/watch?v=k_okcNVZqqI"
-                                                                   class="btn-play"></a>
-                                                            </div>
-                                                            <h4><a href="http://baha.malyarchuk.space/single-blog.html">Road
-                                                                to success</a></h4>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">29
-                                                                        April 2019</a></li>
-                                                                <li>
-                                                                    <a href="http://baha.malyarchuk.space/index-image.html#">Career</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="blog-btn">
-                                                                <a href="http://baha.malyarchuk.space/single-blog.html"
-                                                                   class="btn-st">Read More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 1171px; height: 1418px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0px, 0px, 0px); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 88px; transform: translate3d(0px, 195px, 0px); visibility: visible;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Contact Section -->
-                        <div class="page pt-contact" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-height-auto-observer-wrapper">
-                                    <div class="simplebar-height-auto-observer"></div>
-                                </div>
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: -15px; bottom: 0px;">
-                                        <div class="simplebar-content"
-                                             style="padding: 0px; height: 100%; overflow: hidden scroll;">
-                                            <section class="container">
-
-                                                <!-- Section Title -->
-                                                <div class="header-page mt-70 mob-mt">
-                                                    <h2>Contact</h2>
-                                                    <span></span>
-                                                </div>
-
-                                                <!-- Form Start -->
-                                                <div class="row mt-100">
-                                                    <div class="col-lg-12 col-sm-12">
-                                                        <div class="contact-form ">
-                                                            <form method="post" class="box contact-valid"
-                                                                  id="contact-form" novalidate="novalidate">
-                                                                <div class="row">
-                                                                    <div class="col-lg-6 col-sm-12">
-                                                                        <input type="text" name="name" id="name"
-                                                                               class="form-control"
-                                                                               placeholder="Name *">
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-sm-12">
-                                                                        <input type="email" name="email" id="email"
-                                                                               class="form-control"
-                                                                               placeholder="Email *">
-                                                                    </div>
-                                                                    <div class="col-lg-12 col-sm-12">
-                                                                        <textarea class="form-control" name="note"
-                                                                                  id="note"
-                                                                                  placeholder="Your Message"></textarea>
-                                                                    </div>
-                                                                    <div class="col-lg-12 col-sm-12 text-center">
-                                                                        <button type="submit" class="btn-st">Send
-                                                                            Message
-                                                                        </button>
-                                                                        <div id="loader">
-                                                                            <i class="fas fa-sync"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12 col-sm-12">
-                                                                        <div class="error-messages">
-                                                                            <div id="success">
-                                                                                <i class="far fa-check-circle"></i>Thank
-                                                                                you, your message has been sent.
-                                                                            </div>
-                                                                            <div id="error">
-                                                                                <i class="far fa-times-circle"></i>Error
-                                                                                occurred while sending email. Please try
-                                                                                again later.
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Contact Info -->
-                                                <div class="box contact-info">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-sm-12 info">
-                                                            <i class="fas fa-paper-plane"></i>
-                                                            <p>mayankvara@gmail.com</p>
-                                                            <span>Email</span>
-                                                        </div>
-                                                        <div class="col-lg-4 col-sm-12 info">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <p>Ahmedabad, India</p>
-                                                            <span>Address</span>
-                                                        </div>
-                                                        <div class="col-lg-4 col-sm-12 info">
-                                                            <i class="fas fa-phone"></i>
-                                                            <p>(+1) 123 456 7890</p>
-                                                            <span>Phone</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--Google Map Start-->
-<!--                                                <div class="google-map box mt-100 mb-100">-->
-<!--                                                    <div class="row">-->
-<!--                                                        <div class="col-lg-12">-->
-<!--                                                            <div id="map" data-latitude="40.712775"-->
-<!--                                                                 data-longitude="-74.005973" data-zoom="14"></div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="simplebar-placeholder" style="width: 1171px; height: 1408px;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                <div class="simplebar-scrollbar"
-                                     style="transform: translate3d(0px, 0px, 0px); visibility: hidden;"></div>
-                            </div>
-                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                     style="height: 89px; transform: translate3d(0px, 153px, 0px); visibility: visible;"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+    <nav>
+      <a href="#studio">Drawing Studio</a>
+      <a href="#features">Features</a>
+      <a href="#inquire">₹99 Partner Offer</a>
+    </nav>
+    <a href="#inquire" class="btn-cta-nav">Upgrade Counter</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-pill">✨ THE OPERATING SYSTEM FOR MODERN LAUNDRIES</div>
+    <h1>The Smart Counter That Converts Drop-Offs Into <span class="gradient-text">Zero-Dispute Cash Flow</span></h1>
+    <p>Replace lost paper diaries and disputed balances with an automated Telegram & WhatsApp counter. Log orders by voice, safeguard silk & sarees with VIP alerts, and dispatch doorstep pickups in 1 tap.</p>
+
+    <div class="hero-actions">
+      <a href="#inquire" class="btn-primary">Claim ₹99 Pioneer Plan</a>
+      <button class="btn-secondary" onclick="openModal('counter')">
+        <span>▶ Watch Animated Engine</span>
+      </button>
+    </div>
+
+    <!-- Production Statistics Ribbon -->
+    <div class="stats-ribbon">
+      <div class="stat-item">
+        <h3>434+</h3>
+        <p>Garments Logged & Tracked</p>
+      </div>
+      <div class="stat-item">
+        <h3>₹2,24,500+</h3>
+        <p>VIP Wardrobe Value Protected</p>
+      </div>
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>Private Shop Ledger Isolation</p>
+      </div>
+      <div class="stat-item">
+        <h3>2-Tap</h3>
+        <p>WhatsApp Slips & Bills</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Garment Line-Drawing Studio Section -->
+  <section id="studio" class="section-wrap">
+    <div class="section-title">
+      <span>INTERACTIVE SVG ANIMATION STUDIO</span>
+      <h2>Real-Time Garment & Equipment Drawing</h2>
+    </div>
+
+    <div class="studio-container">
+      <div class="studio-controls">
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Select Fabric or Tool</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Click any button to trigger instant line-drawing vectors with smart care tier classification and memory rate detection.</p>
+
+        <div class="btn-item-tray">
+          <button class="btn-item active" onclick="renderItemAnimation('iron', this)">
+            <span>💨</span> Iron Press
+          </button>
+          <button class="btn-item" onclick="renderItemAnimation('drum', this)">
+            <span>🔄</span> 360 Drum
+          </button>
+          <button class="btn-item" onclick="renderItemAnimation('shirt', this)">
+            <span>👔</span> Shirt
+          </button>
+          <button class="btn-item" onclick="renderItemAnimation('jeans', this)">
+            <span>👖</span> Jeans
+          </button>
+          <button class="btn-item" onclick="renderItemAnimation('dress', this)">
+            <span>👗</span> Dress
+          </button>
+          <button class="btn-item" onclick="renderItemAnimation('saree', this)">
+            <span>🥻</span> Saree
+          </button>
         </div>
+      </div>
+
+      <div class="canvas-display-box">
+        <div id="svgContainer" style="width: 100%; display: grid; place-items: center; min-height: 220px;">
+          <!-- Line Drawing SVG dynamically injected here -->
+        </div>
+
+        <div class="canvas-meta">
+          <div>
+            <div id="itemTitle" style="font-weight: 700; font-size: 1.15rem; color: #FFF;">Heavy Steam Iron</div>
+            <div id="itemDesc" style="color: var(--text-muted); font-size: 0.85rem;">Standard finish, crease-lock pressing</div>
+          </div>
+          <div id="itemBadge" style="background: rgba(56, 189, 248, 0.15); color: var(--primary); padding: 4px 12px; border-radius: 99px; font-weight: 700; font-size: 0.85rem;">
+            🟢 Standard Care
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </section>
 
-<!-- All Script -->
-<script src="./assets/jquery.min.js"></script>
-<script src="./assets/isotope.pkgd.min.js"></script>
-<script src="./assets/bootstrap.min.js"></script>
-<script src="./assets/simplebar.js"></script>
-<script src="./assets/owl.carousel.min.js"></script>
-<script src="./assets/jquery.magnific-popup.min.js"></script>
-<script src="./assets/jquery.animatedheadline.min.js"></script>
-<script src="./assets/jquery.easypiechart.js"></script>
-<script src="./assets/jquery.validation.js"></script>
-<script src="./assets/tilt.js"></script>
-<script src="./assets/main.js"></script>
-<!--<script src="./assets/main-demo.js"></script>-->
+  <!-- Feature Grid -->
+  <section id="features" class="section-wrap">
+    <div class="section-title">
+      <span>ENTERPRISE FACILITY & FUNCTION</span>
+      <h2>Engineered for High-Rush Counters</h2>
+    </div>
 
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div>
+          <div class="feature-icon">⚡</div>
+          <h3>5-Second Voice/Text Intake</h3>
+          <p>Type or speak naturally: "102 2 jeans 3 shirt wash". The engine categorizes garments, applies remembered customer rates, and generates instant WhatsApp slips.</p>
+        </div>
+        <button class="btn-modal-trigger" onclick="openModal('counter')">
+          <span>Explore Line Flow</span> &rarr;
+        </button>
+      </div>
+
+      <div class="feature-card">
+        <div>
+          <div class="feature-icon" style="color: var(--gold); background: rgba(245, 158, 11, 0.1);">👑</div>
+          <h3>V Se VIP Fabric Protection</h3>
+          <p>Automatic safeguards for silk, lehengas, and sarees. Locks in pre-processing condition approvals via WhatsApp before you touch the fabric.</p>
+        </div>
+        <button class="btn-modal-trigger" style="color: var(--gold);" onclick="openModal('vip')">
+          <span>See Risk Protection</span> &rarr;
+        </button>
+      </div>
+
+      <div class="feature-card">
+        <div>
+          <div class="feature-icon" style="color: #34D399; background: rgba(52, 211, 153, 0.1);">🚪</div>
+          <h3>Doorstep Magic Box Tracker</h3>
+          <p>Real-time visual logistics for customers. Pick Morning or Evening slots and track clothes from runner handover to workshop steam press.</p>
+        </div>
+        <button class="btn-modal-trigger" style="color: #34D399;" onclick="openModal('doorstep')">
+          <span>See Live Tracker</span> &rarr;
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead Form Section -->
+  <section id="inquire" class="section-wrap">
+    <div class="lead-section">
+      <div class="lead-copy">
+        <span style="color: var(--primary); font-weight: 700; letter-spacing: 1px;">PIONEER PARTNER ACCESS</span>
+        <h3>Bring the Smart Counter to Your Shop for ₹99</h3>
+        <p>No expensive hardware or complex software downloads. Runs straight inside Telegram and WhatsApp on the phone in your pocket.</p>
+
+        <div class="lead-badges">
+          <div class="lead-badge">✅ <b>Zero Setup Friction:</b> Custom rate card & shop name setup done for you.</div>
+          <div class="lead-badge">🔒 <b>Private Multi-Tenant Ledger:</b> Only you see your money and customers.</div>
+          <div class="lead-badge">🌐 <b>Trilingual Ready:</b> Switch between Gujarati, Hindi, and English.</div>
+        </div>
+      </div>
+
+      <div class="inquiry-form">
+        <h4 style="font-size: 1.3rem; margin-bottom: 1.2rem;">Claim Partner Enrollment</h4>
+        <form onsubmit="handleLeadSubmit(event)">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="leadName" class="form-control" placeholder="e.g. Ramesh Patel" required>
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp Number</label>
+            <input type="tel" id="leadPhone" class="form-control" placeholder="e.g. 9825000000" required>
+          </div>
+          <div class="form-group">
+            <label>Business / Laundry Name</label>
+            <input type="text" id="leadBusiness" class="form-control" placeholder="e.g. Shiv Shakti Cleaners" required>
+          </div>
+          <div class="form-group">
+            <label>City & Locality</label>
+            <input type="text" id="leadCity" class="form-control" placeholder="e.g. Satellite, Ahmedabad" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Activate Smart Counter &rarr;</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Feature Modal -->
+  <div class="modal-backdrop" id="animModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 id="modalTitle" style="font-size: 1.4rem;">Feature Showcase</h3>
+      <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Dynamic system visualization</p>
+
+      <div class="modal-art-box" id="modalArt">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div id="modalFooterText" style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.5;"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Unite Business Ecosystem. Handcrafted for Vasant Power Laundry, Vishv Washing Co. & Partner Dhobi Hubs.</p>
+  </footer>
+
+  <script>
+    // 1. Dynamic Interactive Studio Animations
+    const ITEM_DRAWINGS = {
+      iron: {
+        title: "Heavy Steam Iron",
+        desc: "High-precision commercial steam finish with zero scorch marks.",
+        badge: "🟢 ₹10 Standard",
+        badgeBg: "rgba(56, 189, 248, 0.15)",
+        badgeColor: "#38BDF8",
+        svg: `<svg viewBox="0 0 260 160" width="220" height="140" fill="none">
+          <path class="draw-path" d="M30 115 L220 115 Q235 115 240 100 Q240 85 200 80 L70 80 L40 105 Z" stroke="#38BDF8" stroke-width="3.5" stroke-linejoin="round"/>
+          <path class="draw-path" d="M70 80 L80 40 L160 40 L170 80" stroke="#0D9488" stroke-width="3" stroke-linecap="round"/>
+          <line class="draw-path" x1="40" y1="130" x2="60" y2="145" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+          <line class="draw-path" x1="90" y1="130" x2="110" y2="145" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+          <line class="draw-path" x1="140" y1="130" x2="160" y2="145" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+        </svg>`
+      },
+      drum: {
+        title: "360° Smart Drum Washer",
+        desc: "Reverse-tumble fabric preservation and delicate stain lifting.",
+        badge: "🟢 ₹20 Gentle Wash",
+        badgeBg: "rgba(56, 189, 248, 0.15)",
+        badgeColor: "#38BDF8",
+        svg: `<svg viewBox="0 0 200 200" width="180" height="180" fill="none">
+          <rect class="draw-path" x="30" y="20" width="140" height="160" rx="18" stroke="#38BDF8" stroke-width="3"/>
+          <circle class="draw-circle" cx="100" cy="105" r="46" stroke="#0D9488" stroke-width="3.5"/>
+          <circle class="draw-circle" cx="100" cy="105" r="32" stroke="#38BDF8" stroke-width="2" stroke-dasharray="8 6"/>
+          <circle class="draw-circle" cx="60" cy="40" r="5" stroke="#F59E0B" stroke-width="2"/>
+          <circle class="draw-circle" cx="80" cy="40" r="5" stroke="#10B981" stroke-width="2"/>
+        </svg>`
+      },
+      shirt: {
+        title: "Executive Formal Shirt",
+        desc: "Stiff collar shaping, button guard inspection, and clean vertical fold.",
+        badge: "🟢 ₹10 Regular Iron",
+        badgeBg: "rgba(56, 189, 248, 0.15)",
+        badgeColor: "#38BDF8",
+        svg: `<svg viewBox="0 0 240 200" width="200" height="160" fill="none">
+          <path class="draw-path" d="M70 45 L95 65 L145 65 L170 45 L215 80 L185 105 L170 90 L170 185 L70 185 L70 90 L55 105 L25 80 Z" stroke="#38BDF8" stroke-width="3" stroke-linejoin="round"/>
+          <path class="draw-path" d="M95 65 L120 95 L145 65" stroke="#0D9488" stroke-width="2.5"/>
+          <line class="draw-path" x1="120" y1="95" x2="120" y2="185" stroke="#38BDF8" stroke-width="2"/>
+          <circle cx="120" cy="120" r="3" fill="#FDE047"/>
+          <circle cx="120" cy="145" r="3" fill="#FDE047"/>
+          <circle cx="120" cy="170" r="3" fill="#FDE047"/>
+        </svg>`
+      },
+      jeans: {
+        title: "Denim & Heavy Cotton Jeans",
+        desc: "Reinforced seam crease line, anti-fade wash cycles, and pocket clears.",
+        badge: "🟢 Standard Denim",
+        badgeBg: "rgba(56, 189, 248, 0.15)",
+        badgeColor: "#38BDF8",
+        svg: `<svg viewBox="0 0 200 220" width="180" height="180" fill="none">
+          <path class="draw-path" d="M50 30 L150 30 L160 195 L115 195 L100 80 L85 195 L40 195 Z" stroke="#38BDF8" stroke-width="3" stroke-linejoin="round"/>
+          <path class="draw-path" d="M50 55 L150 55" stroke="#0D9488" stroke-width="2"/>
+          <path class="draw-path" d="M70 30 L70 55 M130 30 L130 55" stroke="#38BDF8" stroke-width="2"/>
+          <path class="draw-path" d="M65 75 Q75 95 85 75" stroke="#F59E0B" stroke-width="2"/>
+          <path class="draw-path" d="M115 75 Q125 95 135 75" stroke="#F59E0B" stroke-width="2"/>
+        </svg>`
+      },
+      dress: {
+        title: "Designer Dress / Kurti",
+        desc: "Fine fabric alert with detailed embroidery safety and zero-stretch handling[.",
+        badge: "🟡 Special Care (₹3,000 Val)",
+        badgeBg: "rgba(245, 158, 11, 0.15)",
+        badgeColor: "#F59E0B",
+        svg: `<svg viewBox="0 0 220 220" width="180" height="180" fill="none">
+          <path class="draw-path" d="M85 30 L110 50 L135 30 L165 55 L150 85 L135 75 L165 195 L55 195 L85 75 L70 85 L55 55 Z" stroke="#F59E0B" stroke-width="3" stroke-linejoin="round"/>
+          <path class="draw-path" d="M95 110 Q110 125 125 110" stroke="#FDE047" stroke-width="2"/>
+          <path class="draw-path" d="M90 140 Q110 155 130 140" stroke="#FDE047" stroke-width="2"/>
+          <line class="draw-path" x1="110" y1="50" x2="110" y2="90" stroke="#F59E0B" stroke-width="2"/>
+        </svg>`
+      },
+      saree: {
+        title: "Silk Saree & Bridal Zari",
+        desc: "V Se VIP gentle solvent roll-press with automated pre-condition approvals.",
+        badge: "👑 V Se VIP Care (₹10,000+ Val)",
+        badgeBg: "rgba(245, 158, 11, 0.25)",
+        badgeColor: "#FDE047",
+        svg: `<svg viewBox="0 0 240 200" width="200" height="160" fill="none">
+          <path class="draw-path" d="M40 50 Q120 20 200 50 L190 160 Q120 190 50 160 Z" stroke="#F59E0B" stroke-width="3" stroke-linejoin="round"/>
+          <path class="draw-path" d="M50 75 Q120 50 190 75" stroke="#FDE047" stroke-width="2" stroke-dasharray="6 4"/>
+          <path class="draw-path" d="M50 100 Q120 75 190 100" stroke="#FDE047" stroke-width="2" stroke-dasharray="6 4"/>
+          <path class="draw-path" d="M50 125 Q120 100 190 125" stroke="#FDE047" stroke-width="2"/>
+          <circle cx="170" cy="65" r="4" fill="#38BDF8"/>
+          <circle cx="170" cy="90" r="4" fill="#38BDF8"/>
+        </svg>`
+      }
+    };
+
+    function renderItemAnimation(key, btnElem) {
+      if(btnElem) {
+        document.querySelectorAll('.btn-item').forEach(b => b.classList.remove('active'));
+        btnElem.classList.add('active');
+      }
+
+      const item = ITEM_DRAWINGS[key];
+      const container = document.getElementById('svgContainer');
+      container.innerHTML = '';
+
+      // Trigger SVG reflow for fresh line drawing animation
+      setTimeout(() => {
+        container.innerHTML = item.svg;
+      }, 20);
+
+      document.getElementById('itemTitle').innerText = item.title;
+      document.getElementById('itemDesc').innerText = item.desc;
+
+      const badge = document.getElementById('itemBadge');
+      badge.innerText = item.badge;
+      badge.style.background = item.badgeBg;
+      badge.style.color = item.badgeColor;
+    }
+
+    // Initialize with Iron Press on initial load
+    renderItemAnimation('iron', document.querySelector('.btn-item'));
+
+    // 2. Feature Modals
+    const MODAL_DATA = {
+      counter: {
+        title: "Intelligent Counter Drop-Off",
+        desc: "Voice or text parses garments, fabric care tiers, and rates instantly.",
+        svg: `<svg viewBox="0 0 300 150" width="280" height="140" fill="none">
+          <path class="draw-path" d="M30 110 L90 110 L110 50 L190 50 L210 110 L270 110" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle class="draw-circle" cx="150" cy="80" r="22" stroke="#0D9488" stroke-width="3"/>
+          <path class="draw-path" d="M140 80 L160 80 M150 70 L150 90" stroke="#FDE047" stroke-width="2"/>
+        </svg>`,
+        footer: "<b>Command Parsed:</b> <code style='color:#38BDF8;'>102 2 jeans 3 shirt wash</code> &rarr; Auto-computes rates, saves customer history, and prepares WhatsApp slips."
+      },
+      vip: {
+        title: "V Se VIP Fabric Safeguard",
+        desc: "Automated risk assessment for delicate silks, lehengas, and embroidery.",
+        svg: `<svg viewBox="0 0 300 150" width="280" height="140" fill="none">
+          <path class="draw-path" d="M80 110 L100 45 L150 85 L200 45 L220 110 Z" stroke="#F59E0B" stroke-width="3.5" stroke-linejoin="round"/>
+          <circle cx="100" cy="40" r="5" fill="#FDE047"/>
+          <circle cx="150" cy="78" r="5" fill="#FDE047"/>
+          <circle cx="200" cy="40" r="5" fill="#FDE047"/>
+          <path class="draw-path" d="M60 120 L240 120" stroke="#38BDF8" stroke-width="2" stroke-dasharray="6 4"/>
+        </svg>`,
+        footer: "<b>Risk Clearance:</b> Customer approves pre-existing stains or fabric wear directly on WhatsApp before washing, preventing damage disputes."
+      },
+      doorstep: {
+        title: "Doorstep Magic Box Tracker",
+        desc: "Visual milestone tracking from doorstep runner to delivery.",
+        svg: `<svg viewBox="0 0 300 150" width="280" height="140" fill="none">
+          <path class="draw-path" d="M40 75 L110 75 L180 75 L260 75" stroke="#334155" stroke-width="4"/>
+          <circle class="draw-circle" cx="50" cy="75" r="16" stroke="#38BDF8" stroke-width="4" fill="#0F172A"/>
+          <circle class="draw-circle" cx="150" cy="75" r="16" stroke="#F59E0B" stroke-width="4" fill="#0F172A"/>
+          <circle class="draw-circle" cx="250" cy="75" r="16" stroke="#10B981" stroke-width="4" fill="#0F172A"/>
+        </svg>`,
+        footer: "<b>3-Stage Visual Bar:</b> 🟡 Scheduled for Pickup &rarr; 🟨 In Workshop Deep Wash &rarr; 🟩 Ready at Doorstep."
+      }
+    };
+
+    function openModal(type) {
+      const modal = document.getElementById('animModal');
+      const data = MODAL_DATA[type];
+      if(!data) return;
+
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalDesc').innerText = data.desc;
+      document.getElementById('modalArt').innerHTML = data.svg;
+      document.getElementById('modalFooterText').innerHTML = data.footer;
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('animModal').classList.remove('active');
+    }
+
+    // 3. Direct WhatsApp Lead Dispatcher
+    function handleLeadSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('leadName').value;
+      const phone = document.getElementById('leadPhone').value;
+      const business = document.getElementById('leadBusiness').value;
+      const city = document.getElementById('leadCity').value;
+
+      const message = `Hello Mayank, I want to activate the Smart Counter OS Pioneer Plan (₹99):\n\n` +
+                      `👤 Name: ${name}\n` +
+                      `📱 Phone: ${phone}\n` +
+                      `🏢 Business: ${business}\n` +
+                      `📍 City/Area: ${city}`;
+
+      window.open(`https://wa.me/919033281622?text=${encodeURIComponent(message)}`, '_blank');
+    }
+  </script>
 </body>
-<span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span
-        class="gr__triangle"></span></span></html>
+</html>
